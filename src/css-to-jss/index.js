@@ -34,9 +34,7 @@ function transformRules(rules, options, result) {
     var singleRuleResult = {};
     if (rule.type === 'media') {
       var mediaName = convertMediaName(rule.media);
-      var media = result[mediaName] = result[mediaName] || {
-        "__expression__": rule.media
-      };
+      var media = result[mediaName] = result[mediaName] || {};
       transformRules(rule.rules, options, media)
     } else if (rule.type === 'rule') {
       rule.declarations.forEach(function (declaration) {
@@ -58,7 +56,7 @@ function transformRules(rules, options, result) {
 
 function pushIntoResult(result, key, value, options) {
   if (result[key]) {
-    return pushIntoResult(result, key + "2", value)
+    return pushIntoResult(result, convertSelector(key + "-next", options), value, options)
   }
   else {
     result[key] = value;
@@ -125,7 +123,7 @@ function stringify(obj, options) {
   let space = options.minify ? 0 : 2
   let result = JSON.stringify(obj, null, space);
   if (options.quote === QUOTE.SINGLE) {
-    result = result.replace(/"([^"]+)":/g, "'$1:'");
+    result = result.replace(/"([^"]+)":/g, "'$1':");
   }
   else if (options.quote === QUOTE.NONE) {
     result = result.replace(/"([^"]+)":/g, "$1:");
@@ -146,10 +144,10 @@ export function transform(inputCssText, options) {
 
     // If the input "css" doesn't wrap it with a css class (raw styles)
     // we need to wrap it with a style so the css parser doesn't choke.
-    var bootstrapWithCssClass = false;
+    var wrapclass = false;
     if (inputCssText.indexOf("{") === -1) {
-      bootstrapWithCssClass = true;
-      inputCssText = `.bootstrapWithCssClass { ${inputCssText} }`;
+      wrapclass = true;
+      inputCssText = `.wrapclass { ${inputCssText} }`;
     }
 
     var css = cssParser.parse(inputCssText);
@@ -157,8 +155,8 @@ export function transform(inputCssText, options) {
     transformRules(css.stylesheet.rules, options, result);
 
     // Don't expose the implementation detail of our wrapped css class.
-    if (bootstrapWithCssClass) {
-      result = result.bootstrapWithCssClass;
+    if (wrapclass) {
+      result = Object.values(result)[0]
     }
 
     result = stringify(result, options)

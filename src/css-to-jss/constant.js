@@ -5,7 +5,6 @@ export const NAMING_STYLE = {
   SNAKE_CASE: 'snake_case',
   SNAKE_CASE_CAMEL: 'snake_Case',
   SNAKE_CASE_PASCAL: 'Snake_Case',
-  KEBEB_CASE: 'kebeb-case'
 }
 
 export const QUOTE = {
@@ -16,7 +15,7 @@ export const QUOTE = {
 
 export const defaultOptions = {
   selector: {
-    style: NAMING_STYLE.CAMEL_CASE
+    style: NAMING_STYLE.PASCAL_CASE
   },
   minify: false,
   quote: QUOTE.NONE
