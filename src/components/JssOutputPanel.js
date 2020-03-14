@@ -12,7 +12,7 @@ const useStyles = createUseStyles({
 
 
 function JssOutputPanel({value, onChange, ...props}) {
-  console.log("JssOutputPanel")
+  // console.log("JssOutputPanel")
   const classes = useStyles()
 
   return (

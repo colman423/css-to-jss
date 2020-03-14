@@ -16,7 +16,7 @@ const useStyles = createUseStyles({
 
 
 function OptionPanel({ options, onChange, ...props }) {
-  console.log("OptionPanel", options)
+  // console.log("OptionPanel", options)
   const classes = useStyles()
 
   const handleChange = useCallback((changeData) => {

@@ -30,7 +30,7 @@ function isSnakeCase(style) {
 
 
 function transformRules(rules, options, result) {
-  console.log("transformRules", rules, options)
+  // console.log("transformRules", rules, options)
   rules.forEach(function (rule) {
     var singleRuleResult = {};
     if (rule.type === 'media') {
@@ -67,7 +67,7 @@ function pushIntoResult(result, key, value, options) {
 }
 
 function convertValue(value) {
-  console.log("convertValue", value)
+  // console.log("convertValue", value)
 
   // convert '12px' to 12
   if (value.match(/^-?\d*\.?\d* *px$/g)) {
@@ -78,7 +78,7 @@ function convertValue(value) {
 }
 
 function convertKey(name) {
-  console.log("convertKey", name)
+  // console.log("convertKey", name)
 
   // turn things like 'align-items' into 'alignItems'
   name = name.replace(/(-.)/g, function (v) { return v[1].toUpperCase(); })
@@ -87,12 +87,12 @@ function convertKey(name) {
 }
 
 function convertMediaName(name) {
-  console.log("mediaNameGenerator", name)
+  // console.log("mediaNameGenerator", name)
   return '@media ' + name;
 };
 
 function convertSelector(name, options) {
-  console.log("convertSelector", name, options)
+  // console.log("convertSelector", name, options)
   name = name.replace(/\s\s+/g, ' ');
 
   if (!isSnakeCase(options.selector.style)) {
@@ -109,13 +109,13 @@ function convertSelector(name, options) {
   name = name.replace(/_+$/g, '');
 
   if (shouldFirstUp(options.selector.style)) {
-    console.log("shouldFirstUp", name)
+    // console.log("shouldFirstUp", name)
     name = name.replace(/^[a-z]/g, v => v[0].toUpperCase())
   }
   else if (shouldFirstDown(options.selector.style)) {
     name = name.replace(/^[A-Z]/g, v => v[0].toLowerCase())
   }
-  console.log("convertSelector", name)
+  // console.log("convertSelector", name)
 
   return name;
 };
@@ -124,12 +124,12 @@ function convertSelector(name, options) {
 function stringify(obj, options) {
   let space = options.minify ? 0 : 2
   let result = JSON.stringify(obj, null, space);
-  console.log("stringify", obj, options, space, result)
+  // console.log("stringify", obj, options, space, result)
   if (options.quote === QUOTE.SINGLE) {
     result = result.replace(/"([^"]+)":/g, "'$1':");
   }
   else if (options.quote === QUOTE.NONE) {
-    console.log("stringify2", result)
+    // console.log("stringify2", result)
     result = result.replace(/"([^"]+)":/g, "$1:");
   }
 
@@ -157,17 +157,17 @@ export function transform(inputCssText, options) {
     var css = cssParser.parse(inputCssText);
     var result = {};
     transformRules(css.stylesheet.rules, options, result);
-    console.log("result1.1", result)
+    // console.log("result1.1", result)
 
     // Don't expose the implementation detail of our wrapped css class.
     if (wrapclass) {
       result = Object.values(result)[0]
     }
-    console.log("result1.2", result)
+    // console.log("result1.2", result)
 
     result = stringify(result, options)
 
-    console.log("result2", result)
+    // console.log("result2", result)
     res(result)
   })
 

@@ -33,12 +33,11 @@ function App() {
   const [cssInput, setCssInput] = useState("", "cssInput")
   const [options, setOptions] = useState(defaultOptions)
   const [jssOutput, setJssOutput] = useState("")
-  const [] = useState(false)
 
-  console.log("App")
+  // console.log("App")
 
   useEffect(() => {
-    console.log("useEffetct")
+    // console.log("useEffetct")
     transform(cssInput, options).then(result => {
       setJssOutput(result)
     }).catch(err => {
