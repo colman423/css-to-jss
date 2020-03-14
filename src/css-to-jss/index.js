@@ -30,6 +30,7 @@ function isSnakeCase(style) {
 
 
 function transformRules(rules, options, result) {
+  console.log("transformRules", rules, options)
   rules.forEach(function (rule) {
     var singleRuleResult = {};
     if (rule.type === 'media') {
@@ -91,7 +92,7 @@ function convertMediaName(name) {
 };
 
 function convertSelector(name, options) {
-  console.log("convertSelector", name)
+  console.log("convertSelector", name, options)
   name = name.replace(/\s\s+/g, ' ');
 
   if (!isSnakeCase(options.selector.style)) {
@@ -108,6 +109,7 @@ function convertSelector(name, options) {
   name = name.replace(/_+$/g, '');
 
   if (shouldFirstUp(options.selector.style)) {
+    console.log("shouldFirstUp", name)
     name = name.replace(/^[a-z]/g, v => v[0].toUpperCase())
   }
   else if (shouldFirstDown(options.selector.style)) {
@@ -122,10 +124,12 @@ function convertSelector(name, options) {
 function stringify(obj, options) {
   let space = options.minify ? 0 : 2
   let result = JSON.stringify(obj, null, space);
+  console.log("stringify", obj, options, space, result)
   if (options.quote === QUOTE.SINGLE) {
     result = result.replace(/"([^"]+)":/g, "'$1':");
   }
   else if (options.quote === QUOTE.NONE) {
+    console.log("stringify2", result)
     result = result.replace(/"([^"]+)":/g, "$1:");
   }
 
@@ -153,11 +157,13 @@ export function transform(inputCssText, options) {
     var css = cssParser.parse(inputCssText);
     var result = {};
     transformRules(css.stylesheet.rules, options, result);
+    console.log("result1.1", result)
 
     // Don't expose the implementation detail of our wrapped css class.
     if (wrapclass) {
       result = Object.values(result)[0]
     }
+    console.log("result1.2", result)
 
     result = stringify(result, options)
 

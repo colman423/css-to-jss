@@ -1,19 +1,8 @@
-import React, { useCallback, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { createUseStyles } from 'react-jss'
-import { NAMING_STYLE, QUOTE } from '../css-to-jss/constant';
-import { merge } from 'lodash';
-
-const useStyles = createUseStyles({
-  root: {
-    display: 'flex'
-  },
-  item: {
-    flex: '1 1'
-  },
-})
 
 
-function RadioOptions({ className, title, optionList, value, onChange, ...props }) {
+function RadioOptions({ className, title, optionList, value, onChange }) {
 
   return (
     <div className={className}>

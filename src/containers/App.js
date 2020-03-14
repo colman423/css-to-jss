@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
-// import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import CssInputPanel from '../components/CssInputPanel'
 import OptionPanel from '../components/OptionPanel'
 import JssOutputPanel from '../components/JssOutputPanel'
 import { transform } from '../css-to-jss'
-import { defaultOptions } from '../css-to-jss/constant';
+import { defaultOptions, demoCssInput } from '../css-to-jss/constant';
 import { createUseStyles } from 'react-jss'
 
 const useStyles = createUseStyles({
@@ -16,7 +15,10 @@ const useStyles = createUseStyles({
     padding: 8
   },
   optionPanel: {
-    flex: "1 1 100%",
+    flex: "1 1 90%",
+    padding: 8
+  },
+  demoBtn: {
     padding: 8
   },
   jssOutputPanel: {
@@ -26,13 +28,12 @@ const useStyles = createUseStyles({
 })
 
 
-
 function App() {
   const classes = useStyles()
   const [cssInput, setCssInput] = useState("", "cssInput")
   const [options, setOptions] = useState(defaultOptions)
   const [jssOutput, setJssOutput] = useState("")
-  const [isError, setIsError] = useState(false)
+  const [] = useState(false)
 
   console.log("App")
 
@@ -60,6 +61,11 @@ function App() {
           />
         </div>
       </div>
+
+      <div className={classes.demoBtn}>
+        <button onClick={() => setCssInput(demoCssInput)}>try demo</button>
+      </div>
+
       <div className={classes.frame}>
         <div className={classes.optionPanel}>
           <OptionPanel
