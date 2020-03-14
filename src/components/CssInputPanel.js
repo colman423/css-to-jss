@@ -33,6 +33,12 @@ function CssInputPanel({ value, onChange, ...props }) {
   //     },
   //   )
     editor.focus()
+    editor.setSelection({
+      endLineNumber: 100,
+      endColumn: 1,
+      startColumn: 1,
+      startLineNumber: 1
+    })
   }, [])
 
   return (
