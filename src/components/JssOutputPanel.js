@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { createUseStyles } from 'react-jss'
+import MonacoEditor from 'react-monaco-editor';
 
 const useStyles = createUseStyles({
   root: {
@@ -11,18 +12,27 @@ const useStyles = createUseStyles({
 })
 
 
-function JssOutputPanel({value, onChange, ...props}) {
+function JssOutputPanel({ value, onChange, ...props }) {
   // console.log("JssOutputPanel")
   const classes = useStyles()
 
+  const options = useMemo(() => ({
+    selectOnLineNumbers: true,
+    roundedSelection: false,
+    readOnly: true,
+    cursorStyle: "line",
+    automaticLayout: true,
+  }), [])
+
   return (
-    <textarea
-      className={classes.textarea}
-      value={value}
-      readOnly
-      {...props}
-    >
-    </textarea>
+    <div className={classes.textarea} {...props}>
+      <MonacoEditor
+        language="css"
+        theme="vs-dark"
+        value={value}
+        options={options}
+      />
+    </div>
   )
 }
 

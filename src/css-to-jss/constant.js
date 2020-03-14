@@ -21,6 +21,13 @@ export const defaultOptions = {
   quote: QUOTE.NONE
 }
 
+export const defaultCssInput =
+  `.some-class {
+    margin-top: 40px;
+    padding: 12px 16px;
+  }
+`
+
 export const demoCssInput =
   `div {
   width: 850px;

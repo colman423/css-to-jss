@@ -3,7 +3,7 @@ import CssInputPanel from '../components/CssInputPanel'
 import OptionPanel from '../components/OptionPanel'
 import JssOutputPanel from '../components/JssOutputPanel'
 import { transform } from '../css-to-jss'
-import { defaultOptions, demoCssInput } from '../css-to-jss/constant';
+import { defaultOptions, demoCssInput, defaultCssInput } from '../css-to-jss/constant';
 import { createUseStyles } from 'react-jss'
 
 const useStyles = createUseStyles({
@@ -30,9 +30,9 @@ const useStyles = createUseStyles({
 
 function App() {
   const classes = useStyles()
-  const [cssInput, setCssInput] = useState("", "cssInput")
+  const [cssInput, setCssInput] = useState(defaultCssInput, "cssInput")
   const [options, setOptions] = useState(defaultOptions)
-  const [jssOutput, setJssOutput] = useState("")
+  const [jssOutput, setJssOutput] = useState(" ")
 
   // console.log("App")
 
@@ -41,7 +41,7 @@ function App() {
     transform(cssInput, options).then(result => {
       setJssOutput(result)
     }).catch(err => {
-      setJssOutput(err)
+      setJssOutput(err.toString())
     })
   }, [cssInput, options])
 
