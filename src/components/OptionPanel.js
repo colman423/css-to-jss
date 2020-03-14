@@ -1,12 +1,22 @@
 import React from 'react';
-// import logo from './logo.svg';
-import { transform } from '../css-to-jss'
-import { defaultOptions } from '../css-to-jss/constant';
+import { createUseStyles } from 'react-jss'
 
-function OptionPanel() {
+const useStyles = createUseStyles({
+  root: {
+  },
+  textarea: {
+    width: "100%"
+  }
+})
+
+
+function OptionPanel(props) {
+  const classes = useStyles()
   return (
-    <div>
-      OptionPanel
+    <div className={classes.root}>
+      <textarea className={classes.textarea}>
+        {props.css}
+      </textarea>
     </div>
   )
 }

@@ -138,30 +138,33 @@ function stringify(obj, options) {
 
 
 export function transform(inputCssText, options) {
+  return new Promise((res, rej) => {
 
-  if (!inputCssText) {
-    throw new Error('missing css text to transform');
-  }
+    if (!inputCssText) {
+      res("")
+    }
 
-  // If the input "css" doesn't wrap it with a css class (raw styles)
-  // we need to wrap it with a style so the css parser doesn't choke.
-  var bootstrapWithCssClass = false;
-  if (inputCssText.indexOf("{") === -1) {
-    bootstrapWithCssClass = true;
-    inputCssText = `.bootstrapWithCssClass { ${inputCssText} }`;
-  }
+    // If the input "css" doesn't wrap it with a css class (raw styles)
+    // we need to wrap it with a style so the css parser doesn't choke.
+    var bootstrapWithCssClass = false;
+    if (inputCssText.indexOf("{") === -1) {
+      bootstrapWithCssClass = true;
+      inputCssText = `.bootstrapWithCssClass { ${inputCssText} }`;
+    }
 
-  var css = cssParser.parse(inputCssText);
-  var result = {};
-  transformRules(css.stylesheet.rules, options, result);
+    var css = cssParser.parse(inputCssText);
+    var result = {};
+    transformRules(css.stylesheet.rules, options, result);
 
-  // Don't expose the implementation detail of our wrapped css class.
-  if (bootstrapWithCssClass) {
-    result = result.bootstrapWithCssClass;
-  }
+    // Don't expose the implementation detail of our wrapped css class.
+    if (bootstrapWithCssClass) {
+      result = result.bootstrapWithCssClass;
+    }
 
-  result = stringify(result, options)
+    result = stringify(result, options)
 
-  console.log("result2", result)
-  return result;
+    console.log("result2", result)
+    res(result)
+  })
+
 }
