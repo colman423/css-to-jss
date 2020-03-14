@@ -19,6 +19,7 @@ function JssOutputPanel({value, onChange, ...props}) {
     <textarea
       className={classes.textarea}
       value={value}
+      readOnly
       {...props}
     >
     </textarea>

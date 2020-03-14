@@ -8,19 +8,19 @@ import { defaultOptions } from '../css-to-jss/constant';
 import { createUseStyles } from 'react-jss'
 
 const useStyles = createUseStyles({
-  root: {
+  frame: {
     display: "flex",
   },
   cssInputPanel: {
-    flex: "1 1 40%",
+    flex: "1 1 50%",
     padding: 8
   },
   optionPanel: {
-    flex: "1 1 20%",
+    flex: "1 1 100%",
     padding: 8
   },
   jssOutputPanel: {
-    flex: "1 1 40%",
+    flex: "1 1 50%",
     padding: 8
   }
 })
@@ -46,25 +46,29 @@ function App() {
   }, [cssInput, options])
 
   return (
-    <div className={classes.root}>
-      <div className={classes.cssInputPanel}>
-        <CssInputPanel
-          value={cssInput}
-          onChange={setCssInput}
-        />
+    <>
+      <div className={classes.frame}>
+        <div className={classes.cssInputPanel}>
+          <CssInputPanel
+            value={cssInput}
+            onChange={setCssInput}
+          />
+        </div>
+        <div className={classes.jssOutputPanel}>
+          <JssOutputPanel
+            value={jssOutput}
+          />
+        </div>
       </div>
-      <div className={classes.optionPanel}>
-        <OptionPanel
-          option={options}
-          onChange={setOptions}
-        />
+      <div className={classes.frame}>
+        <div className={classes.optionPanel}>
+          <OptionPanel
+            options={options}
+            onChange={setOptions}
+          />
+        </div>
       </div>
-      <div className={classes.jssOutputPanel}>
-        <JssOutputPanel
-          value={jssOutput}
-        />
-      </div>
-    </div>
+    </>
   )
 }
 
