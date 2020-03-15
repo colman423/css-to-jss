@@ -1,7 +1,4 @@
 import React from 'react';
-import { createUseStyles } from 'react-jss'
-
-
 
 function CheckboxOptions({ className, title, label, value, onChange }) {
 

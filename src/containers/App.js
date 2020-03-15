@@ -1,43 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import CssInputPanel from '../components/CssInputPanel'
 import OptionPanel from '../components/OptionPanel'
 import JssOutputPanel from '../components/JssOutputPanel'
 import { transform } from '../css-to-jss'
 import { defaultOptions, demoCssInput, defaultCssInput } from '../css-to-jss/constant';
 import { createUseStyles } from 'react-jss'
+import Title from '../components/Title';
+import cx from 'classnames'
+import Footer from '../components/Footer';
 
 const useStyles = createUseStyles({
-  frame: {
+  flex: {
     display: "flex",
+    padding: 8,
+  },
+  title: {
+    flexGrow: 0,
+    flexBasis: '40%'
+  },
+  optionPanel: {
+    flexGrow: 1,
+    flexBasis: '60%'
+  },
+
+  container: {
+    backgroundColor: '#eee',
+    justifyContent: 'space-around'
   },
   cssInputPanel: {
     flex: "1 1 50%",
-    padding: 8
+    margin: 4
   },
-  optionPanel: {
-    flex: "1 1 90%",
-    padding: 8
+  jssOutputPanel: {
+    flex: "1 1 50%",
+    margin: 4
   },
   demoBtn: {
     padding: 8
   },
-  jssOutputPanel: {
-    flex: "1 1 50%",
-    padding: 8
-  }
 })
 
 
-function App() {
+function App({ className }) {
   const classes = useStyles()
   const [cssInput, setCssInput] = useState(defaultCssInput, "cssInput")
   const [options, setOptions] = useState(defaultOptions)
   const [jssOutput, setJssOutput] = useState(" ")
 
-  // console.log("App")
 
   useEffect(() => {
-    // console.log("useEffetct")
     transform(cssInput, options).then(result => {
       setJssOutput(result)
     }).catch(err => {
@@ -47,32 +58,38 @@ function App() {
 
   return (
     <>
-      <div className={classes.frame}>
-        <div className={classes.cssInputPanel}>
+      <div className={classes.flex}>
+        <Title className={classes.title} />
+        <OptionPanel
+          className={classes.optionPanel}
+          options={options}
+          onChange={setOptions}
+        />
+      </div>
+
+      <div className={className}>
+        <div className={cx(classes.flex, classes.container)}>
           <CssInputPanel
+            className={classes.cssInputPanel}
             value={cssInput}
             onChange={setCssInput}
           />
-        </div>
-        <div className={classes.jssOutputPanel}>
           <JssOutputPanel
+            className={classes.jssOutputPanel}
             value={jssOutput}
           />
         </div>
       </div>
 
-      <div className={classes.demoBtn}>
-        <button onClick={() => setCssInput(demoCssInput)}>try demo</button>
+      <div className={classes.flex}>
+        <Footer />
       </div>
 
-      <div className={classes.frame}>
-        <div className={classes.optionPanel}>
-          <OptionPanel
-            options={options}
-            onChange={setOptions}
-          />
-        </div>
-      </div>
+      {/* <div className={classes.demoBtn}>
+          <button onClick={() => setCssInput(demoCssInput)}>try demo</button>
+        </div> */}
+
+
     </>
   )
 }

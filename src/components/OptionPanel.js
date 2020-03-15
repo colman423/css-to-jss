@@ -4,6 +4,7 @@ import { NAMING_STYLE, QUOTE } from '../css-to-jss/constant';
 import { merge } from 'lodash';
 import RadioOptions from './RadioOptions';
 import CheckboxOptions from './CheckboxOptions';
+import cx from 'classnames';
 
 const useStyles = createUseStyles({
   root: {
@@ -15,8 +16,7 @@ const useStyles = createUseStyles({
 })
 
 
-function OptionPanel({ options, onChange, ...props }) {
-  // console.log("OptionPanel", options)
+function OptionPanel({ className, options, onChange, ...props }) {
   const classes = useStyles()
 
   const handleChange = useCallback((changeData) => {
@@ -34,6 +34,7 @@ function OptionPanel({ options, onChange, ...props }) {
       minify: e.target.checked
     })
   }, [handleChange])
+  
   const handleSelectorStyleChange = useCallback((e) => {
     handleChange({
       selector: {
@@ -49,7 +50,7 @@ function OptionPanel({ options, onChange, ...props }) {
   }, [handleChange])
 
   return (
-    <div className={classes.root}>
+    <div className={cx(className, classes.root)}>
 
       <RadioOptions
         className={classes.item}

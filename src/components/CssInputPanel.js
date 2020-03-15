@@ -1,32 +1,27 @@
-import React, { useMemo, useCallback, useEffect, useRef } from 'react';
+import React, { useCallback } from 'react';
 import { createUseStyles } from 'react-jss'
 import MonacoEditor from 'react-monaco-editor';
 
 const useStyles = createUseStyles({
-  root: {
-  },
-  textarea: {
-    width: "100%",
-    height: 300
+  title: {
+    margin: "0px 0px 4px 0px",
+    textAlign: 'center'
   }
 })
 
+const options = {
+  selectOnLineNumbers: true,
+  roundedSelection: false,
+  readOnly: false,
+  cursorStyle: "line",
+  automaticLayout: true,
+  formatOnPaste: true
+}
 
-function CssInputPanel({ value, onChange, ...props }) {
-  // console.log("CssInputPanel")
+function CssInputPanel({ className, value, onChange }) {
   const classes = useStyles()
 
-  const options = useMemo(() => ({
-    selectOnLineNumbers: true,
-    roundedSelection: false,
-    readOnly: false,
-    cursorStyle: "line",
-    automaticLayout: true,
-    formatOnPaste: true
-  }), [])
-
-  const editorDidMount = useCallback((editor, monaco) => {
-  //   console.log(monaco.KeyCode, monaco)
+  const editorDidMount = useCallback((editor) => {
   //   editor.addCommand(
   //     monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter,
   //     () => {
@@ -42,13 +37,15 @@ function CssInputPanel({ value, onChange, ...props }) {
   }, [])
 
   return (
-    <div className={classes.textarea} {...props}>
+    <div className={className}>
+      <h2 className={classes.title}>Input Css</h2>
       <MonacoEditor
+      height={350}
         language="css"
         theme="vs-dark"
         value={value}
         options={options}
-        onChange={(newValue, e) => onChange(newValue)}
+        onChange={(newValue) => onChange(newValue)}
         editorDidMount={editorDidMount}
       />
     </div>
