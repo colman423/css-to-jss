@@ -9,8 +9,8 @@ export const NAMING_STYLE = {
 
 export const QUOTE = {
   NONE: 'none',
-  SINGLE: 'SINGLE',
-  DOUBLE: 'DOUBLE'
+  SINGLE: "'single'",
+  DOUBLE: '"double"'
 }
 
 export const defaultOptions = {
