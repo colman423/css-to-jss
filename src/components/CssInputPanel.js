@@ -22,11 +22,11 @@ function CssInputPanel({ className, value, onChange }) {
   const classes = useStyles()
 
   const editorDidMount = useCallback((editor) => {
-  //   editor.addCommand(
-  //     monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter,
-  //     () => {
-  //     },
-  //   )
+    //   editor.addCommand(
+    //     monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter,
+    //     () => {
+    //     },
+    //   )
     editor.focus()
     editor.setSelection({
       endLineNumber: 100,
@@ -36,16 +36,21 @@ function CssInputPanel({ className, value, onChange }) {
     })
   }, [])
 
+  const handleChange = useCallback((newValue) => {
+    // localStorage.setItem('cssinput', newValue)
+    onChange(newValue)
+  }, [onChange])
+
   return (
     <div className={className}>
       <h2 className={classes.title}>Input Css</h2>
       <MonacoEditor
-      height={350}
+        height={350}
         language="css"
         theme="vs-dark"
         value={value}
         options={options}
-        onChange={(newValue) => onChange(newValue)}
+        onChange={handleChange}
         editorDidMount={editorDidMount}
       />
     </div>

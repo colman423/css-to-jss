@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useRef } from 'react';
 import CssInputPanel from '../components/CssInputPanel'
 import OptionPanel from '../components/OptionPanel'
 import JssOutputPanel from '../components/JssOutputPanel'
@@ -43,11 +43,11 @@ const useStyles = createUseStyles({
 
 function App({ className }) {
   const classes = useStyles()
-  const [cssInput, setCssInput] = useState(defaultCssInput, "cssInput")
+  
+  const [cssInput, setCssInput] = useState(localStorage.getItem("cssinput") || defaultCssInput, "cssInput")
   const [options, setOptions] = useState(defaultOptions)
   const [jssOutput, setJssOutput] = useState(" ")
-
-
+  
   useEffect(() => {
     transform(cssInput, options).then(result => {
       setJssOutput(result)
@@ -55,6 +55,20 @@ function App({ className }) {
       setJssOutput(err.toString())
     })
   }, [cssInput, options])
+
+
+  const localCssInput = useRef()
+  useEffect(() => {
+    localCssInput.current = cssInput
+  }, [cssInput])
+  
+  useEffect(() => {
+    console.log("set unload")
+    window.onunload = () => {
+      console.log("onunload")
+      localStorage.setItem('cssinput', localCssInput.current)
+    }
+  }, [])
 
   return (
     <>
