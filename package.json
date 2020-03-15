@@ -2,7 +2,7 @@
   "name": "css-to-jss",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://colman423.github.io/cssToJss",
+  "homepage": "https://colman423.github.io/css-to-jss",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
